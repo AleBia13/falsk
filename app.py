@@ -1,5 +1,5 @@
-from flask import Flask, jsonify
-import requests
+from flask import Flask, jsonify,request
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -11,7 +11,7 @@ data_store = {"data": None}
 
 @app.route('/store', methods=['POST'])
 def store_data():
-        data = requests.get_json()
+        data = request.get_json()
         data_store["data"] = data.get('data', None)
         return jsonify({"message": "Data stored successfully"}), 200
 
