@@ -21,3 +21,21 @@ def receive_data():
         return jsonify({"data_present": is_data_present
         ,
         "data": data_store}), 200
+
+latest_image = None
+
+@app.route('/stream', methods=['POST'])
+def post_image():
+    global latest_image
+    latest_image = request.data  # Get the image data
+    # Now you can save the image or process it as needed
+    return 'Image received', 200
+
+@app.route('/latest', methods=['GET'])
+def get_image():
+    global latest_image
+    if latest_image is None:
+        return 'No image available', 404
+    else:
+        #return send_file(io.BytesIO(latest_image), mimetype='image/jpeg')
+        return latest_image, 200
